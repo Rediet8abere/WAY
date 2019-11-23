@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -7,16 +8,24 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!-- Bootswatch -->
-    <link rel="stylesheet" href="https://bootswatch.com/4/yeti/bootstrap.min.css">
-    <!-- Custom Style -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <!-- Custom Css -->
+    <link href="style.css" rel="stylesheet" type="text/css"/>
 
-    <title>WAY</title>
+    <title>signup</title>
   </head>
   <body>
-      {% block content %}
-      {% endblock %}
+      <div class="sign-up-form">
+          <h1>Sign Up Now</h1>
+          <form>
+              <input type="text" class="input-box" placeholder="Your Username">
+              <input type="email" class="input-box" placeholder="Your Email">
+              <input type="password" class="input-box" placeholder="Your password">
+              <p> <span><input type="checkbox"></span>I agree to the terms of services</p>
+              <button type="button" class="signup-btn" name="button">Sign Up</button>
+              <hr>
+              <button type="button" class="signup-btn" name="button">Log In</button>
+          </form>
+      </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
