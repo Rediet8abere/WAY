@@ -1,0 +1,10 @@
+<!-- templates/philanthropist_index.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Philanthropist</h1>
+    {% for philanthropy in philanthropist %}
+        <h2>{{ philanthropy.name }}</h2>
+        <small>{{ philanthropy.donates }}</small>
+    {% endfor %}
+{% endblock %}

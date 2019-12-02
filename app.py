@@ -9,7 +9,11 @@ host = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/WAY')
 client = MongoClient(host=f'{host}?retryWrites=false')
 db = client.get_default_database()
 way = db.way
-
+# OUR MOCK ARRAY OF philanthropist
+philanthropist = [
+    { 'name': 'Bill Gates', 'donates': 'money' },
+    { 'name': 'Greg Thomson', 'donates': 'Time' }
+]
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = '820ca0568ea84a53bd886ecac1dbddc9'
@@ -53,6 +57,11 @@ def login():
 
     if request.method == 'GET':
         return render_template('login.html', form=form)
+
+@app.route('/philanthropist')
+def philanthropist_index():
+    """Show all philanthropist."""
+    return render_template('philanthropist.html', philanthropist=philanthropist)
 
 
 if __name__ == '__main__':
