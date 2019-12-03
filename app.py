@@ -10,11 +10,7 @@ client = MongoClient(host=f'{host}?retryWrites=false')
 db = client.get_default_database()
 users = db.users
 ways = db.ways
-# OUR MOCK ARRAY OF philanthropist
-philanthropist = [
-    { 'name': 'Bill Gates', 'donates': 'money' },
-    { 'name': 'Greg Thomson', 'donates': 'Time' }
-]
+
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = '820ca0568ea84a53bd886ecac1dbddc9'
@@ -67,7 +63,6 @@ def philanthropist_index():
 @app.route('/new/way')
 def new_way():
     """Create a new way."""
-    # return "Hello World"
     return render_template('new_way.html')
 
 @app.route('/ways', methods=['POST'])
@@ -78,7 +73,13 @@ def ways_submit():
         'description': request.form.get('description')
     }
     ways.insert_one(way)
-    return redirect(url_for('playlists_index'))
+    return redirect(url_for('new_way'))
+
+@app.route('/availability')
+def availability():
+    """Submit a new way."""
+    return render_template('availability.html')
+
 
 
 
