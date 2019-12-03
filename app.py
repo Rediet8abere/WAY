@@ -8,7 +8,8 @@ from user import user
 host = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/WAY')
 client = MongoClient(host=f'{host}?retryWrites=false')
 db = client.get_default_database()
-way = db.way
+users = db.users
+ways = db.ways
 # OUR MOCK ARRAY OF philanthropist
 philanthropist = [
     { 'name': 'Bill Gates', 'donates': 'money' },
@@ -29,11 +30,11 @@ def register():
     form = RegistrationForm()
     if request.method == 'POST':
         if form.validate_on_submit():
-            if way.find_one({"username": form.username.data}):
+            if users.find_one({"username": form.username.data}):
                 flash(f'That account already exists')
                 return redirect(url_for('index'))
             else:
-                current_user = way.insert_one(user(form.username.data, form.password.data, form.email.data).json())
+                current_user = users.insert_one(user(form.username.data, form.password.data, form.email.data).json())
                 return redirect(url_for('index'))
         else:
             flash(f'Incorrect crednetials')
@@ -48,9 +49,9 @@ def login():
     form = LoginForm()
     if request.method == 'POST':
         if form.validate_on_submit():
-            if way.find_one({"email": form.email.data}):
-                if (form.email.data == way.find_one({"email": form.email.data})["email"]) and (form.password.data == way.find_one({"email": form.email.data})["password"]):
-                    return render_template('find.html')
+            if users.find_one({"email": form.email.data}):
+                if (form.email.data == users.find_one({"email": form.email.data})["email"]) and (form.password.data == users.find_one({"email": form.email.data})["password"]):
+                    return redirect(url_for('philanthropist_index'))
             else:
                 flash(f'Log in unsuccessful. Please Check password and email', 'danger')
     return render_template('login.html', form=form)
@@ -61,7 +62,25 @@ def login():
 @app.route('/philanthropist')
 def philanthropist_index():
     """Show all philanthropist."""
-    return render_template('philanthropist.html', philanthropist=philanthropist)
+    return render_template('find.html')
+
+@app.route('/new/way')
+def new_way():
+    """Create a new way."""
+    # return "Hello World"
+    return render_template('new_way.html')
+
+@app.route('/ways', methods=['POST'])
+def ways_submit():
+    """Submit a new way."""
+    way = {
+        'title': request.form.get('title'),
+        'description': request.form.get('description')
+    }
+    ways.insert_one(way)
+    return redirect(url_for('playlists_index'))
+
+
 
 
 if __name__ == '__main__':
