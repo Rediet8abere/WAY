@@ -4,12 +4,15 @@ from bson.objectid import ObjectId
 from forms import RegistrationForm, LoginForm
 import os
 from user import user
+import json
+import pymongo
 
 host = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/WAY')
-client = MongoClient(host=f'{host}?retryWrites=false')
+client = pymongo.MongoClient(host=f'{host}?retryWrites=false')
 db = client.get_default_database()
 users = db.users
 ways = db.ways
+
 
 app = Flask(__name__)
 
@@ -78,6 +81,14 @@ def ways_submit():
 @app.route('/availability')
 def availability():
     """Submit a new way."""
+    search_term = request.args.get("q")
+    print("search_term", search_term)
+    if search_term is not None:
+        response = db.ways.find_one({'title': search_term})
+        print("response", response)
+        print("response[title]", response["title"])
+        print("response[description]", response["description"])
+        return render_template('availability.html', what=response["title"], who=response["description"])
     return render_template('availability.html')
 
 
