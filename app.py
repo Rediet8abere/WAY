@@ -85,10 +85,11 @@ def availability():
     print("search_term", search_term)
     if search_term is not None:
         response = db.ways.find_one({'title': search_term})
-        print("response", response)
-        print("response[title]", response["title"])
-        print("response[description]", response["description"])
-        return render_template('availability.html', what=response["title"], who=response["description"])
+        if response is not None:
+            print("response", response)
+            print("response[title]", response["title"])
+            print("response[description]", response["description"])
+            return render_template('availability.html', what=response["title"], who=response["description"])
     return render_template('availability.html')
 
 
