@@ -34,7 +34,7 @@ def register():
                 return redirect(url_for('index'))
             else:
                 current_user = users.insert_one(user(form.username.data, form.password.data, form.email.data).json())
-                return redirect(url_for('index'))
+                return redirect(url_for('login'))
         else:
             flash(f'Incorrect crednetials')
             return render_template('register.html', form=form)
