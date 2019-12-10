@@ -23,6 +23,16 @@ def index():
     """Return homepage."""
     return render_template('index.html')
 
+@app.route('/Contact')
+def Contact():
+    """Return homepage."""
+    return render_template('contact.html')
+
+@app.route('/Services')
+def Services():
+    """Return homepage."""
+    return render_template('services.html')
+
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
     """Create a new account."""
